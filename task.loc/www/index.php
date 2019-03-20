@@ -49,6 +49,13 @@
 		echo "<h3>Файл успешно загружен на сервер</h3>";
 		}
 		else { echo "<h3>Ошибка! Не удалось загрузить файл на сервер!</h3>"; exit; }
+
+		$dir    = $uploaddir;
+		$files1 = scandir($dir);
+		
+
+		print_r($files1);
+		
 		
 		}
 	?>
