@@ -5,22 +5,54 @@
 	
 </head>
 <body>
-	 <?php
+	<?php
+		function listing($filename){
+			$uploaddir = file_get_contents($filename);
+			$hdl = opendir($uploaddir);
+			while ($file = readdir($hdl)) {
+				if (($file!="..")&&($file!=".")) { 
+					$c[]=$file;
+				} 
+			}
+			closedir($hdl);
+
+			if (sizeof($c)>0) {
+				asort($c);
+				foreach ($c as $k) {
+					$full=$uploaddir. "/". $k;
+					echo ("<input name=fl[] value=$k type=checkbox>");
+					echo ("<a href=$full>$k</a>");
+				
+					echo " размер: ".filesize($full). " bytes"; 
+					echo ("<br>");
+				}
+			}
+			else {
+				echo "Ваша папка порожня, додайте файли";
+			}
+
+		}
+
        
         if( isset( $_POST['creation_folder'] ) ) {
         	if($_POST['name_folder'] == null){
-        		echo "Вы не ввели имя папки!!!";
+        		echo "Ви не ввели ім'я' папки!!!";
         	}
         	else {
             	@mkdir($_POST['name_folder'], 0700);
         
        	        $a = $_POST['name_folder'];
 	        	$b = "./". $a. "/";
-	    		echo "Ваша папка - ". $b;
+	    		echo "Ваша робоча папка - ". $b;
+	    		echo ("<br>");
 	    		$filename = 'dir.txt';
 				$text = $b;
 			
 				file_put_contents($filename, $text);
+
+				listing($filename);
+
+				
 			}
         }  
 
@@ -38,40 +70,20 @@
 				echo "<h3>Ошибка! Не удалось загрузить файл на сервер!</h3>"; exit; 
 			}
 
-			$dir = $uploaddir;
+			listing($filename);
 
-			$hdl = opendir($dir);
-			while ($file = readdir($hdl)) {
-				if (($file!="..")&&($file!=".")) { 
-					$a[]=$file;
-				} 
-			}
-			closedir($hdl);
-
-			if (sizeof($a)>0) {
-				asort($a);
-			}
-
-
-			foreach ($a as $k) {
-				$full=$dir. "/". $k;
-				echo ("<input name=fl[] value=$k type=checkbox>");
-				echo ("<a href=$full>$k</a>");
-				
-				echo " размер: ".filesize($full). " bytes"; 
-				echo ("<br>");
-			}
+			
 		}
 	?>
 	<form method="POST">
-        <input type="text" name="name_folder" maxlength="20" placeholder="Введите имя рабочей папки" />
-        <input type="submit" name="creation_folder" value="Создать папку" />
+        <input type="text" name="name_folder" maxlength="20" placeholder="Введіть імя робочої папки" />
+        <input type="submit" name="creation_folder" value="Відправити" />
     </form>
 
    
 	<form action="" method="POST" enctype="multipart/form-data">
 		<input type="file" name="uploadfile">
-		<input type="submit" name="upload" value="Загрузить">
+		<input type="submit" name="upload" value="Завантажити">
 	</form>
 	
 </body>
