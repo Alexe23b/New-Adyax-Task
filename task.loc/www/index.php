@@ -63,10 +63,10 @@
 
 		
 			if (copy($_FILES['uploadfile']['tmp_name'], $uploadfile)){
-				echo "<h3>Файл успешно загружен на сервер</h3>";
+				echo "<h3>Файл успішно завантажен на сервер</h3>";
 			}
 			else { 
-				echo "<h3>Ошибка! Не удалось загрузить файл на сервер!</h3>"; exit; 
+				echo "<h3>Помилка! Не вдалося завантажити файл на сервер!</h3>"; exit; 
 			}
 
 			listing($filename);
@@ -82,7 +82,7 @@
 			foreach($files1 as $k){
 			    echo '<input type="radio" name="'.$k.'" value="'.$k.'">'.'<label for="'.$k.'">'.$k.'</label>'.'<br>';
 			    }
-			    echo 'Позначьте файлы для видалення:';
+			    echo 'Позначьте файли для видалення:';
 			echo '<input type="submit" value="Видалити вибрані файли" >';
 			echo '</form>';
 		}
